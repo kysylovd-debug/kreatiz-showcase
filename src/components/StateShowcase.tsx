@@ -1,7 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useRef, useState } from "react";
 import { SHOWCASE_ITEMS, ShowcaseItem } from "./showcase/showcaseData";
+import BoucherieRoche from "./showcase/BoucherieRoche";
+import AtelierKoma from "./showcase/AtelierKoma";
+import LeFeuillet from "./showcase/LeFeuillet";
+import MieEtFarine from "./showcase/MieEtFarine";
+import VisionnaireStudio from "./showcase/VisionnaireStudio";
 
 interface StateShowcaseProps {
   currentIndex: number;
@@ -18,12 +23,42 @@ export default function StateShowcase({
 }: StateShowcaseProps) {
   const total = SHOWCASE_ITEMS.length;
 
+  const dragStartX = useRef<number | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+
   const handlePrev = () => {
     onSelectIndex((currentIndex - 1 + total) % total);
   };
 
   const handleNext = () => {
     onSelectIndex((currentIndex + 1) % total);
+  };
+
+  // Pointer drag to spin the orbital wheel
+  const handlePointerDown = (e: React.PointerEvent) => {
+    dragStartX.current = e.clientX;
+    setIsDragging(false);
+  };
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (dragStartX.current === null) return;
+    const diff = e.clientX - dragStartX.current;
+    if (Math.abs(diff) > 10) {
+      setIsDragging(true);
+    }
+  };
+
+  const handlePointerUp = (e: React.PointerEvent) => {
+    if (dragStartX.current !== null) {
+      const diff = e.clientX - dragStartX.current;
+      if (diff > 45) {
+        handlePrev();
+      } else if (diff < -45) {
+        handleNext();
+      }
+    }
+    dragStartX.current = null;
+    setTimeout(() => setIsDragging(false), 50);
   };
 
   const activeItem = SHOWCASE_ITEMS[currentIndex];
@@ -71,48 +106,65 @@ export default function StateShowcase({
     }
   };
 
+  // Render miniature live website component inside each card
+  const renderMiniSite = (id: string) => {
+    switch (id) {
+      case "boucherie-roche":
+        return <BoucherieRoche />;
+      case "atelier-koma":
+        return <AtelierKoma />;
+      case "le-feuillet":
+        return <LeFeuillet />;
+      case "mie-farine":
+        return <MieEtFarine />;
+      case "visionnaire":
+        return <VisionnaireStudio />;
+      default:
+        return <BoucherieRoche />;
+    }
+  };
+
+  const urls: { [key: string]: string } = {
+    "boucherie-roche": "https://roche-boucherie.fr",
+    "atelier-koma": "https://atelier-koma.ch",
+    "le-feuillet": "https://lefeuillet-restaurant.fr",
+    "mie-farine": "https://miefarine-fournil.fr",
+    "visionnaire": "https://visionnaire-optique.fr",
+  };
+
   return (
     <div className="w-full h-full flex flex-col justify-between p-3 sm:p-6 lg:p-8 max-w-7xl mx-auto select-none overflow-hidden">
-      {/* Top Header of State 03 */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+      {/* Top Header of State 03 — Clean and Uncluttered without tabs */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
         <div>
           <div className="inline-flex items-center gap-2 font-mono-code text-xs text-[#002FA7] uppercase tracking-widest font-bold mb-1.5">
             <span className="w-2 h-2 bg-[#002FA7] rounded-[1px]"></span>
-            <span>03 / ATELIER DES STYLES & DÉMONSTRATION COMMERCIALE</span>
+            <span>03 / ATELIER DES STYLES & SAVOIR-FAIRE</span>
           </div>
           <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-[-0.03em] text-[#0A0B0E]">
             Chaque commerce a une âme unique. Voici comment nous la révélons.
           </h2>
         </div>
 
-        {/* Quick Style Switcher Tabs */}
-        <div className="flex items-center gap-1.5 font-mono-code text-xs bg-[#F8F9FA] p-1 border border-[#E5E7EB] rounded-[2px] overflow-x-auto max-w-full">
-          {SHOWCASE_ITEMS.map((item, idx) => {
-            const isCurrent = idx === currentIndex;
-            return (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => onSelectIndex(idx)}
-                className={`px-2.5 py-1 rounded-[2px] whitespace-nowrap transition-colors cursor-pointer ${
-                  isCurrent
-                    ? "bg-[#002FA7] text-white font-bold"
-                    : "text-[#4B5563] hover:text-black hover:bg-white"
-                }`}
-              >
-                {item.num}. {item.name.split(" ")[0]}
-              </button>
-            );
-          })}
+        <div className="font-mono-code text-xs text-[#4B5563]">
+          Glisser pour tourner • Cliquer sur la maquette pour explorer
         </div>
       </div>
 
       {/* 3D Circular / Orbital Carousel Container */}
-      <div className="relative w-full flex-1 my-auto flex items-center justify-center [perspective:1200px] min-h-[380px] max-h-[520px]">
+      <div
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        className="relative w-full flex-1 my-auto flex items-center justify-center [perspective:1200px] min-h-[390px] max-h-[560px] cursor-grab active:cursor-grabbing"
+      >
         {/* Navigation Arrows */}
         <button
           type="button"
-          onClick={handlePrev}
+          onClick={(e) => {
+            e.stopPropagation();
+            handlePrev();
+          }}
           aria-label="Style précédent"
           className="absolute left-2 sm:left-4 z-40 w-11 h-11 bg-white/95 hover:bg-[#002FA7] hover:text-white border border-[#E5E7EB] hover:border-[#002FA7] rounded-[2px] shadow-md flex items-center justify-center text-sm font-bold font-mono-code transition-all cursor-pointer active:scale-95"
         >
@@ -121,7 +173,10 @@ export default function StateShowcase({
 
         <button
           type="button"
-          onClick={handleNext}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleNext();
+          }}
           aria-label="Style suivant"
           className="absolute right-2 sm:right-4 z-40 w-11 h-11 bg-white/95 hover:bg-[#002FA7] hover:text-white border border-[#E5E7EB] hover:border-[#002FA7] rounded-[2px] shadow-md flex items-center justify-center text-sm font-bold font-mono-code transition-all cursor-pointer active:scale-95"
         >
@@ -129,7 +184,7 @@ export default function StateShowcase({
         </button>
 
         {/* The 5 Cards in Orbital Arrangement */}
-        <div className="relative w-[92%] sm:w-[75%] lg:w-[62%] h-[92%] max-h-[460px] flex items-center justify-center">
+        <div className="relative w-[92%] sm:w-[75%] lg:w-[68%] h-[92%] max-h-[480px] flex items-center justify-center">
           {SHOWCASE_ITEMS.map((item: ShowcaseItem, idx: number) => {
             const isCurrent = idx === currentIndex;
             const style = getCardStyle(idx);
@@ -138,7 +193,10 @@ export default function StateShowcase({
               <div
                 key={item.id}
                 onClick={() => {
-                  if (!isCurrent) {
+                  if (isDragging) return;
+                  if (isCurrent) {
+                    onOpenFullPreview(item.id);
+                  } else {
                     onSelectIndex(idx);
                   }
                 }}
@@ -146,97 +204,56 @@ export default function StateShowcase({
                   ...style,
                   transition: "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease",
                 }}
-                className={`absolute inset-0 bg-[#FFFFFF] border rounded-[2px] flex flex-col justify-between overflow-hidden cursor-pointer ${
+                className={`absolute inset-0 bg-[#FFFFFF] border rounded-[2px] flex flex-col overflow-hidden cursor-pointer group ${
                   isCurrent
-                    ? "border-[#002FA7] shadow-xl"
+                    ? "border-[#002FA7] shadow-2xl ring-1 ring-[#002FA7]/30"
                     : "border-[#E5E7EB] hover:border-gray-400"
                 }`}
               >
-                {/* Mock Browser Header Strip */}
-                <div className="h-9 px-4 bg-[#F8F9FA] border-b border-[#E5E7EB] flex items-center justify-between font-mono-code text-[11px] shrink-0">
+                {/* Clean Browser Chrome Strip */}
+                <div className="h-8 px-4 bg-[#F8F9FA] border-b border-[#E5E7EB] flex items-center justify-between font-mono-code text-[11px] shrink-0 z-10">
                   <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#E5E7EB]"></span>
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#E5E7EB]"></span>
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#E5E7EB]"></span>
-                    <span className="ml-2 text-gray-400 hidden sm:inline">
-                      https://{item.id}.artisanat-local.fr
+                    <span className="w-2 h-2 rounded-full bg-[#E5E7EB]"></span>
+                    <span className="w-2 h-2 rounded-full bg-[#E5E7EB]"></span>
+                    <span className="w-2 h-2 rounded-full bg-[#E5E7EB]"></span>
+                    <span className="ml-2 text-gray-500 font-sans hidden sm:inline">
+                      {urls[item.id] || "https://kreatiz-client.fr"}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-[10px] font-bold text-[#002FA7]">
-                      {item.num} / 05
+                      {item.num}. {item.name}
                     </span>
                   </div>
                 </div>
 
-                {/* Card Content Interior */}
-                <div className="p-6 flex-1 flex flex-col justify-between overflow-hidden bg-white">
-                  <div>
-                    {/* Style Badge */}
-                    <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-                      <span className="inline-block bg-[#002FA7]/10 text-[#002FA7] font-mono-code text-[10px] font-bold px-2 py-0.5 rounded-[2px] uppercase">
-                        {item.styleName}
-                      </span>
-                      <span className="font-mono-code text-[11px] text-[#4B5563]">
-                        {item.sector}
-                      </span>
-                    </div>
-
-                    {/* Brand Name */}
-                    <h3 className="text-2xl sm:text-3xl font-black text-[#0A0B0E] uppercase tracking-tight leading-tight">
-                      {item.name}
-                    </h3>
-                    <p className="font-mono-code text-xs text-[#002FA7] font-semibold mt-1 uppercase tracking-wide">
-                      {item.subtitle}
-                    </p>
-
-                    {/* Vibe description */}
-                    <p className="text-xs sm:text-sm text-[#4B5563] mt-3 leading-relaxed line-clamp-3">
-                      {item.vibe}
-                    </p>
+                {/* Direct Miniature View of the Real Page */}
+                <div className="relative flex-1 w-full overflow-hidden bg-white">
+                  <div
+                    style={{
+                      transform: "scale(0.55)",
+                      transformOrigin: "top left",
+                      width: "182%",
+                      height: "182%",
+                      pointerEvents: "none",
+                    }}
+                    className="overflow-hidden select-none"
+                  >
+                    {renderMiniSite(item.id)}
                   </div>
 
-                  {/* Aesthetic Attributes Strip */}
-                  <div className="mt-4 pt-4 border-t border-[#E5E7EB] grid grid-cols-2 gap-3 text-xs font-mono-code">
-                    <div>
-                      <span className="text-gray-400 block text-[10px] uppercase">Typographie réelle</span>
-                      <span className="font-bold text-[#0A0B0E] truncate block">{item.fontFamilyName}</span>
-                    </div>
-                    <div>
-                      <span className="text-gray-400 block text-[10px] uppercase">Palette de couleurs</span>
-                      <div className="flex items-center gap-1.5 mt-1">
-                        {item.palette.map((color, cIdx) => (
-                          <span
-                            key={cIdx}
-                            style={{ backgroundColor: color }}
-                            className="w-4 h-4 rounded-[1px] border border-black/20"
-                            title={color}
-                          ></span>
-                        ))}
+                  {/* Subtle Click-To-Open Overlay on Active Card */}
+                  {isCurrent && (
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-end justify-between p-4 pointer-events-none">
+                      <div className="bg-[#0A0B0E]/90 backdrop-blur-xs text-white px-3 py-1.5 rounded-[2px] font-mono-code text-[11px] uppercase tracking-wider shadow-md">
+                        {item.styleName}
+                      </div>
+
+                      <div className="bg-[#002FA7] text-white px-3.5 py-1.5 rounded-[2px] font-mono-code text-[11px] uppercase tracking-wider font-semibold shadow-md flex items-center gap-1.5">
+                        <span>Cliquer pour explorer</span>
+                        <span>↗</span>
                       </div>
                     </div>
-                  </div>
-                </div>
-
-                {/* Bottom Action Bar */}
-                <div className="p-4 bg-[#F8F9FA] border-t border-[#E5E7EB] flex items-center justify-between shrink-0">
-                  <div className="flex items-center gap-2 font-mono-code text-xs text-[#4B5563]">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-                    <span>Site 100% interactif & scrollable</span>
-                  </div>
-
-                  {isCurrent && (
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onOpenFullPreview(item.id);
-                      }}
-                      className="bg-[#002FA7] hover:bg-[#00227A] text-white px-4 py-2 text-xs font-mono-code uppercase font-bold tracking-wider rounded-[2px] transition-colors cursor-pointer shadow-xs active:translate-y-px flex items-center gap-2"
-                    >
-                      <span>Agrandir et explorer en grand format</span>
-                      <span>↗</span>
-                    </button>
                   )}
                 </div>
               </div>
@@ -256,7 +273,7 @@ export default function StateShowcase({
         </button>
 
         <div className="flex items-center gap-2">
-          <span>Commerce actif :</span>
+          <span>Commerce sélectionné :</span>
           <span className="text-black font-bold uppercase">{activeItem.name}</span>
           <span className="text-[#002FA7] font-semibold">({activeItem.styleName.split("—")[1]?.trim()})</span>
         </div>
@@ -266,7 +283,7 @@ export default function StateShowcase({
           onClick={() => onOpenFullPreview(activeItem.id)}
           className="text-[#002FA7] hover:underline font-bold cursor-pointer"
         >
-          Mode Grand Format (Plein écran) ↗
+          Mode Grand Format ↗
         </button>
       </div>
     </div>

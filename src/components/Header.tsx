@@ -72,13 +72,8 @@ export default function Header({
         })}
       </nav>
 
-      {/* Right: Quick Shortcuts & Commercial Action */}
+      {/* Right: Commercial Action */}
       <div className="flex items-center gap-3">
-        <div className="hidden xl:flex items-center gap-1.5 font-mono-code text-[11px] text-[#4B5563] bg-[#F8F9FA] border border-[#E5E7EB] px-2.5 py-1 rounded-[2px]">
-          <span className="text-[#002FA7] font-bold">Navigation :</span>
-          <span>Molette ou Flèches ↑ ↓</span>
-        </div>
-
         <button
           type="button"
           onClick={onOpenContact}

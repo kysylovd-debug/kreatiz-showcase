@@ -55,56 +55,53 @@ export default function FullPreviewModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-xs">
-      <div className="relative w-full h-[94vh] max-w-[1440px] bg-white border border-[#E5E7EB] rounded-[2px] shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-        {/* Top Control Bar */}
-        <div className="h-14 shrink-0 bg-[#0A0B0E] text-white px-4 sm:px-6 flex items-center justify-between border-b border-black">
-          {/* Left: Active identity */}
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-5 bg-black/70 backdrop-blur-xs">
+      <div className="relative w-full h-[95vh] max-w-[1440px] bg-white border border-[#E5E7EB] rounded-[2px] shadow-2xl flex flex-col overflow-hidden animate-in fade-in duration-200">
+        {/* Top Control Bar — Clean & Minimal */}
+        <div className="h-12 shrink-0 bg-[#0A0B0E] text-white px-4 sm:px-6 flex items-center justify-between border-b border-black">
+          {/* Left: Active shop name */}
           <div className="flex items-center gap-3">
-            <span className="w-2.5 h-2.5 rounded-[2px] bg-[#002FA7]"></span>
-            <span className="text-xs font-mono-code uppercase tracking-wider text-gray-300 hidden sm:inline">
-              Mode Inspection Grand Format :
-            </span>
+            <span className="w-2 h-2 rounded-[1px] bg-[#002FA7]"></span>
             <span className="text-xs sm:text-sm font-bold text-white uppercase tracking-tight">
               {activeItem.name}
             </span>
-            <span className="hidden lg:inline bg-[#1A1D24] text-[#002FA7] border border-[#002FA7]/40 px-2 py-0.5 text-[10px] font-mono-code uppercase font-semibold">
-              {activeItem.styleName}
+            <span className="hidden sm:inline text-xs text-gray-400 font-mono-code">
+              ({activeItem.sector.split(",")[0]})
             </span>
           </div>
 
-          {/* Center: Device Switcher */}
-          <div className="flex items-center gap-2 bg-[#1A1D24] p-1 border border-[#2D3139] rounded-[2px]">
+          {/* Center: Clean Device Switcher */}
+          <div className="flex items-center bg-[#1A1D24] p-0.5 border border-[#2D3139] rounded-[2px] text-xs font-mono-code">
             <button
               type="button"
               onClick={() => setDeviceMode("desktop")}
-              className={`px-3 py-1 text-xs font-mono-code uppercase tracking-wider transition-colors cursor-pointer rounded-[2px] ${
+              className={`px-3 py-1 rounded-[1px] transition-colors cursor-pointer ${
                 deviceMode === "desktop"
-                  ? "bg-[#002FA7] text-white font-bold"
+                  ? "bg-[#002FA7] text-white font-semibold"
                   : "text-gray-400 hover:text-white"
               }`}
             >
-              Ordinateur (100%)
+              Ordinateur
             </button>
             <button
               type="button"
               onClick={() => setDeviceMode("mobile")}
-              className={`px-3 py-1 text-xs font-mono-code uppercase tracking-wider transition-colors cursor-pointer rounded-[2px] ${
+              className={`px-3 py-1 rounded-[1px] transition-colors cursor-pointer ${
                 deviceMode === "mobile"
-                  ? "bg-[#002FA7] text-white font-bold"
+                  ? "bg-[#002FA7] text-white font-semibold"
                   : "text-gray-400 hover:text-white"
               }`}
             >
-              Smartphone (390px)
+              Smartphone (375px)
             </button>
           </div>
 
-          {/* Right: Quick switcher & Close */}
+          {/* Right: Quick switcher dropdown & Close */}
           <div className="flex items-center gap-3">
             <select
               value={activeId}
               onChange={(e) => onSelectId(e.target.value)}
-              className="bg-[#1A1D24] border border-[#2D3139] text-white text-xs font-mono-code px-2.5 py-1.5 rounded-[2px] focus:outline-none focus:border-[#002FA7] hidden md:block"
+              className="bg-[#1A1D24] border border-[#2D3139] text-white text-xs font-mono-code px-2 py-1 rounded-[2px] focus:outline-none focus:border-[#002FA7] hidden md:block"
             >
               {SHOWCASE_ITEMS.map((item: ShowcaseItem) => (
                 <option key={item.id} value={item.id}>
@@ -116,33 +113,33 @@ export default function FullPreviewModal({
             <button
               type="button"
               onClick={onClose}
-              className="bg-[#2D3139] hover:bg-[#7A1C1C] text-white px-3.5 py-1.5 text-xs font-mono-code uppercase tracking-wider rounded-[2px] transition-colors cursor-pointer flex items-center gap-1.5"
+              aria-label="Fermer l'aperçu"
+              className="bg-[#1A1D24] hover:bg-[#7A1C1C] text-white px-3 py-1 text-xs font-mono-code uppercase rounded-[2px] transition-colors cursor-pointer flex items-center gap-1.5"
             >
-              <span>Fermer l&apos;aperçu</span>
-              <span className="font-bold">×</span>
+              <span>Fermer</span>
+              <span className="font-bold text-sm leading-none">×</span>
             </button>
           </div>
         </div>
 
-        {/* Scrollable Preview Area */}
-        <div className="flex-1 overflow-hidden bg-[#E5E7EB] flex items-center justify-center">
+        {/* Scrollable Viewport */}
+        <div className="flex-1 overflow-hidden bg-[#ECEEF2] flex items-center justify-center">
           {deviceMode === "desktop" ? (
             <div className="w-full h-full overflow-y-auto">
               {renderComponent(activeId)}
             </div>
           ) : (
-            <div className="w-full h-full py-6 flex items-center justify-center overflow-hidden">
-              {/* Phone Frame */}
-              <div className="w-[390px] h-[95%] max-h-[780px] bg-white border-4 border-black rounded-[28px] shadow-2xl flex flex-col overflow-hidden relative">
-                {/* Phone Notch */}
-                <div className="h-6 bg-black w-36 mx-auto rounded-b-xl z-20 shrink-0"></div>
-                {/* Phone Screen Scrollable Area */}
+            <div className="w-full h-full py-4 flex items-center justify-center overflow-hidden">
+              {/* Clean Smartphone Frame without fake notch */}
+              <div className="w-[375px] h-[96%] max-h-[760px] bg-white border border-[#CBD5E1] rounded-[4px] shadow-2xl flex flex-col overflow-hidden">
+                {/* Minimal Status Strip */}
+                <div className="h-6 bg-[#0A0B0E] text-white px-4 flex items-center justify-between text-[10px] font-mono-code shrink-0">
+                  <span>09:41</span>
+                  <span>5G • 100%</span>
+                </div>
+                {/* Scrollable Screen */}
                 <div className="flex-1 overflow-y-auto">
                   {renderComponent(activeId)}
-                </div>
-                {/* Home Indicator */}
-                <div className="h-4 bg-white shrink-0 flex items-center justify-center">
-                  <div className="w-28 h-1 bg-black/40 rounded-full"></div>
                 </div>
               </div>
             </div>

@@ -15,59 +15,78 @@ export default function StateExpertise({ onNext, onPrev }: StateExpertiseProps) 
       id: 1,
       num: "PILIER 01",
       title: "Un site sur-mesure qui vous ressemble vraiment",
-      badge: "Vitesse < 0.8s • 100% Smartphone",
-      desc: "On crée une vitrine unique qui reflète l'ambiance authentique de votre boutique, vos produits et votre savoir-faire. Rapide et fluide sur téléphone comme sur ordinateur, pensé pour donner envie de pousser votre porte ou de réserver en deux clics.",
-      benefit: "Fini les modèles interchangeables : votre commerce a une identité forte que vos concurrents ne peuvent pas copier.",
+      badge: "Chargement < 0.8s • 100% Mobile",
+      desc: "Nous concevons une vitrine unique qui reflète l'atmosphère authentique de votre établissement, vos spécialités et votre savoir-faire. Conçu pour smartphone et ordinateur, il donne envie à vos visiteurs de pousser votre porte ou de réserver sans hésiter.",
+      benefit: "Une identité visuelle singulière et mémorable que vos concurrents ne peuvent pas reproduire.",
       svg: (isHovered: boolean) => (
-        <svg viewBox="0 0 240 120" className="w-full h-28 stroke-[#0A0B0E] fill-none" strokeWidth="1.5">
-          {/* Browser frame */}
-          <rect x="10" y="10" width="220" height="100" rx="2" stroke="#E5E7EB" fill="#FFFFFF" />
-          <line x1="10" y1="28" x2="230" y2="28" stroke="#E5E7EB" />
-          <circle cx="22" cy="19" r="2.5" fill="#E5E7EB" />
-          <circle cx="32" cy="19" r="2.5" fill="#E5E7EB" />
-          <circle cx="42" cy="19" r="2.5" fill="#E5E7EB" />
+        <svg viewBox="0 0 260 125" className="w-full h-32 select-none" fill="none">
+          {/* Browser Window Frame */}
+          <rect x="8" y="8" width="244" height="108" rx="2" stroke="#E5E7EB" strokeWidth="1" fill="#FFFFFF" />
+          
+          {/* Header Bar */}
+          <line x1="8" y1="26" x2="252" y2="26" stroke="#E5E7EB" strokeWidth="1" />
+          <circle cx="18" cy="17" r="2" fill="#D1D5DB" />
+          <circle cx="26" cy="17" r="2" fill="#D1D5DB" />
+          <circle cx="34" cy="17" r="2" fill="#D1D5DB" />
+          
+          {/* URL Pill */}
+          <rect x="46" y="12" width="100" height="10" rx="1" fill="#F3F4F6" />
+          <text x="52" y="19.5" fontSize="6.5" fill="#9CA3AF" fontFamily="monospace">
+            votre-commerce.fr
+          </text>
 
-          {/* Dynamic layout blocks */}
+          {/* Hero Section Wireframe */}
           <rect
-            x="24"
-            y="38"
-            width={isHovered ? "90" : "80"}
-            height="14"
+            x="18"
+            y="34"
+            width={isHovered ? "124" : "112"}
+            height="12"
             rx="1"
             fill="#002FA7"
-            stroke="none"
             className="transition-all duration-300"
           />
-          <rect x="24" y="58" width="110" height="6" rx="1" fill="#E5E7EB" stroke="none" />
-          <rect x="24" y="68" width="95" height="6" rx="1" fill="#E5E7EB" stroke="none" />
+          <rect x="18" y="52" width="100" height="4" rx="1" fill="#E5E7EB" />
+          <rect x="18" y="60" width="85" height="4" rx="1" fill="#E5E7EB" />
+          
+          {/* Hero CTA Button */}
           <rect
-            x="24"
-            y="82"
-            width="55"
-            height="16"
-            rx="2"
+            x="18"
+            y="72"
+            width="46"
+            height="12"
+            rx="1"
             fill={isHovered ? "#002FA7" : "#0A0B0E"}
-            stroke="none"
             className="transition-colors duration-300"
+          />
+          <text x="25" y="80" fontSize="5.5" fill="#FFFFFF" fontFamily="monospace" fontWeight="bold">
+            RÉSERVER
+          </text>
+
+          {/* Right Showcase Card */}
+          <rect
+            x="154"
+            y="34"
+            width="88"
+            height="50"
+            rx="2"
+            fill={isHovered ? "#002FA7" : "#F8F9FA"}
+            fillOpacity={isHovered ? "0.06" : "1"}
+            stroke={isHovered ? "#002FA7" : "#E5E7EB"}
+            strokeWidth="1"
+            className="transition-all duration-300"
+          />
+          <circle cx="174" cy="50" r="7" stroke={isHovered ? "#002FA7" : "#94A3B8"} strokeWidth="1" />
+          <path
+            d="M 160 76 L 176 60 L 194 72 L 210 54 L 234 76"
+            stroke={isHovered ? "#002FA7" : "#94A3B8"}
+            strokeWidth="1"
+            strokeLinecap="round"
           />
 
-          {/* Right visual card */}
-          <rect
-            x="148"
-            y="38"
-            width="72"
-            height="60"
-            rx="2"
-            fill={isHovered ? "#002FA7/10" : "#F8F9FA"}
-            stroke={isHovered ? "#002FA7" : "#E5E7EB"}
-            className="transition-colors duration-300"
-          />
-          <path
-            d="M 160 82 L 175 62 L 190 75 L 205 55 L 215 82 Z"
-            fill="none"
-            stroke={isHovered ? "#002FA7" : "#94A3B8"}
-            strokeWidth="1.2"
-          />
+          {/* 3 Bottom Feature Pills */}
+          <rect x="18" y="93" width="68" height="14" rx="1" fill="#F8F9FA" stroke="#E5E7EB" strokeWidth="0.8" />
+          <rect x="92" y="93" width="68" height="14" rx="1" fill="#F8F9FA" stroke="#E5E7EB" strokeWidth="0.8" />
+          <rect x="166" y="93" width="76" height="14" rx="1" fill="#F8F9FA" stroke="#E5E7EB" strokeWidth="0.8" />
         </svg>
       ),
     },
@@ -75,48 +94,61 @@ export default function StateExpertise({ onNext, onPrev }: StateExpertiseProps) 
       id: 2,
       num: "PILIER 02",
       title: "Être premier sur Google dans votre ville",
-      badge: "Pack Local Google Maps • Top #1",
-      desc: "Quand un habitant cherche « boucherie », « coiffeur » ou « restaurant » suivi du nom de votre ville sur son téléphone, nous faisons tout le travail en coulisses pour que votre commerce apparaisse tout en haut des résultats, devant vos concurrents.",
-      benefit: "Vous captez naturellement les nouveaux habitants et les passants du quartier qui cherchent où aller aujourd'hui.",
+      badge: "Pack Local Google • Top #1",
+      desc: "Quand un habitant ou un passant cherche votre métier suivi du nom de votre ville sur son smartphone, nous optimisons votre référencement naturel et votre fiche pour apparaître en tête des résultats.",
+      benefit: "Vous attirez directement les clients locaux prêts à acheter aujourd'hui dans votre quartier.",
       svg: (isHovered: boolean) => (
-        <svg viewBox="0 0 240 120" className="w-full h-28 stroke-[#0A0B0E] fill-none" strokeWidth="1.5">
-          {/* Search bar simulation */}
-          <rect x="15" y="15" width="210" height="26" rx="2" stroke="#E5E7EB" fill="#FFFFFF" />
-          <circle cx="30" cy="28" r="4.5" stroke="#002FA7" strokeWidth="1.5" />
-          <line x1="33.5" y1="31.5" x2="38" y2="36" stroke="#002FA7" strokeWidth="1.5" />
-          <text x="46" y="32" fontSize="9" fill="#0A0B0E" fontFamily="monospace">
-            {isHovered ? "meilleur commerce près de moi" : "artisan [votre ville]"}
+        <svg viewBox="0 0 260 125" className="w-full h-32 select-none" fill="none">
+          {/* Search bar simulation with correct vertical baseline */}
+          <rect x="12" y="10" width="236" height="24" rx="2" stroke="#E5E7EB" strokeWidth="1" fill="#FFFFFF" />
+          <circle cx="25" cy="22" r="3.5" stroke="#002FA7" strokeWidth="1.2" />
+          <line x1="27.5" y1="24.5" x2="31" y2="28" stroke="#002FA7" strokeWidth="1.2" strokeLinecap="round" />
+          <text x="38" y="25" fontSize="7.5" fill="#374151" fontFamily="sans-serif">
+            {isHovered ? "meilleur artisan à proximité" : "artisan [votre ville]"}
           </text>
+          <line x1={isHovered ? "145" : "110"} y1="17" x2={isHovered ? "145" : "110"} y2="27" stroke="#002FA7" strokeWidth="1" className="animate-pulse" />
 
-          {/* Ranking list */}
-          {/* #1 Result */}
-          <g className="transition-transform duration-300">
+          {/* Top Result #1 (Your Shop) */}
+          <g className="transition-all duration-300">
             <rect
-              x="15"
-              y="52"
-              width="210"
-              height="30"
+              x="12"
+              y="42"
+              width="236"
+              height="38"
               rx="2"
-              fill={isHovered ? "#002FA7/8" : "#FFFFFF"}
-              stroke={isHovered ? "#002FA7" : "#002FA7"}
-              strokeWidth={isHovered ? "2" : "1.5"}
+              fill={isHovered ? "#002FA7" : "#FFFFFF"}
+              fillOpacity={isHovered ? "0.05" : "1"}
+              stroke="#002FA7"
+              strokeWidth={isHovered ? "1.5" : "1"}
             />
-            <rect x="25" y="60" width="16" height="14" rx="1" fill="#002FA7" />
-            <text x="33" y="70" fontSize="9" fill="#FFFFFF" textAnchor="middle" fontFamily="monospace" fontWeight="bold">
+            {/* Rank badge */}
+            <rect x="22" y="50" width="14" height="14" rx="1" fill="#002FA7" />
+            <text x="29" y="60" fontSize="8" fill="#FFFFFF" textAnchor="middle" fontFamily="monospace" fontWeight="bold">
               1
             </text>
-            <text x="48" y="67" fontSize="10" fill="#0A0B0E" fontFamily="sans-serif" fontWeight="bold">
-              Votre Commerce — Avis ★★★★★
+
+            {/* Shop title */}
+            <text x="44" y="58" fontSize="8.5" fill="#0A0B0E" fontFamily="sans-serif" fontWeight="600">
+              Votre Commerce — Avis Vérifiés
             </text>
-            <text x="48" y="77" fontSize="8" fill="#002FA7" fontFamily="monospace">
-              Ouvert • À 250m de votre position
+
+            {/* Stars & Distance */}
+            <text x="44" y="70" fontSize="7" fill="#D97706" fontFamily="sans-serif">
+              ★★★★★
+            </text>
+            <text x="78" y="70" fontSize="7" fill="#002FA7" fontFamily="monospace">
+              (5.0) • Ouvert • À 250m
             </text>
           </g>
 
-          {/* #2 Result */}
-          <rect x="15" y="88" width="210" height="20" rx="2" fill="#F8F9FA" stroke="#E5E7EB" />
-          <text x="25" y="101" fontSize="8" fill="#94A3B8" fontFamily="monospace">
-            2. Concurrent A
+          {/* Result #2 (Competitor, subtle) */}
+          <rect x="12" y="86" width="236" height="28" rx="2" fill="#F8F9FA" stroke="#E5E7EB" strokeWidth="1" />
+          <rect x="22" y="93" width="14" height="14" rx="1" fill="#E5E7EB" />
+          <text x="29" y="103" fontSize="8" fill="#6B7280" textAnchor="middle" fontFamily="monospace">
+            2
+          </text>
+          <text x="44" y="102" fontSize="7.5" fill="#6B7280" fontFamily="sans-serif">
+            Concurrent local habituel — Avis mitigés
           </text>
         </svg>
       ),
@@ -126,69 +158,72 @@ export default function StateExpertise({ onNext, onPrev }: StateExpertiseProps) 
       num: "PILIER 03",
       title: "La publicité ciblée qui remplit la boutique",
       badge: "Rayon de 3 à 15 km • Retours Mesurables",
-      desc: "On ne se contente pas de mettre le site en ligne. Nous créons et pilotons vos campagnes publicitaires locales pour faire connaître vos spécialités aux habitants de votre zone au moment où ils décident d'acheter, sans que vous n'ayez à toucher un seul bouton.",
-      benefit: "Chaque euro investi sert directement à amener de vrais clients qui dépensent dans votre établissement.",
+      desc: "Nous créons et pilotons vos campagnes de promotion locale pour faire découvrir vos nouveautés et temps forts aux habitants de votre zone de chalandise au bon moment, sans complication pour vous.",
+      benefit: "Chaque euro investi génère des visites réelles et du chiffre d'affaires en caisse.",
       svg: (isHovered: boolean) => (
-        <svg viewBox="0 0 240 120" className="w-full h-28" fill="none">
-          {/* Geo radar grid */}
-          <circle cx="120" cy="60" r="48" stroke="#E5E7EB" strokeWidth="1" strokeDasharray="3 3" />
+        <svg viewBox="0 0 260 125" className="w-full h-32 select-none" fill="none">
+          {/* Subtle Map Grid lines */}
+          <line x1="20" y1="20" x2="240" y2="20" stroke="#F3F4F6" strokeWidth="1" />
+          <line x1="20" y1="60" x2="240" y2="60" stroke="#F3F4F6" strokeWidth="1" />
+          <line x1="20" y1="100" x2="240" y2="100" stroke="#F3F4F6" strokeWidth="1" />
+          <line x1="60" y1="10" x2="60" y2="115" stroke="#F3F4F6" strokeWidth="1" />
+          <line x1="130" y1="10" x2="130" y2="115" stroke="#F3F4F6" strokeWidth="1" />
+          <line x1="200" y1="10" x2="200" y2="115" stroke="#F3F4F6" strokeWidth="1" />
+
+          {/* Concentric Radar Circles */}
+          <circle cx="130" cy="62" r="50" stroke="#E5E7EB" strokeWidth="1" strokeDasharray="3 3" />
           <circle
-            cx="120"
-            cy="60"
+            cx="130"
+            cy="62"
             r={isHovered ? "36" : "32"}
             stroke="#002FA7"
-            strokeWidth="1.5"
-            strokeOpacity={isHovered ? "0.6" : "0.3"}
+            strokeWidth="1"
+            strokeOpacity={isHovered ? "0.7" : "0.35"}
             className="transition-all duration-500"
           />
-          <circle cx="120" cy="60" r="16" stroke="#002FA7" strokeWidth="1.5" strokeOpacity="0.8" />
+          <circle cx="130" cy="62" r="16" stroke="#002FA7" strokeWidth="1" strokeOpacity="0.8" />
 
-          {/* Center store icon */}
-          <rect x="112" y="52" width="16" height="16" rx="2" fill="#002FA7" />
-          <path d="M 115 58 L 120 54 L 125 58 V 65 H 115 Z" fill="#FFFFFF" />
+          {/* Center Store Pin */}
+          <circle cx="130" cy="62" r="6" fill="#002FA7" />
+          <circle cx="130" cy="62" r="2.5" fill="#FFFFFF" />
 
-          {/* Surrounding local customer pins */}
-          <circle
-            cx={isHovered ? "80" : "85"}
-            cy={isHovered ? "45" : "48"}
-            r="4"
-            fill="#0A0B0E"
-            className="transition-all duration-300"
-          />
-          <circle
-            cx={isHovered ? "165" : "160"}
-            cy={isHovered ? "40" : "44"}
-            r="4"
-            fill="#0A0B0E"
-            className="transition-all duration-300"
-          />
-          <circle
-            cx={isHovered ? "150" : "145"}
-            cy={isHovered ? "85" : "80"}
-            r="4"
-            fill="#002FA7"
-            className="transition-all duration-300"
-          />
-          <circle
-            cx={isHovered ? "90" : "95"}
-            cy={isHovered ? "80" : "76"}
-            r="4"
-            fill="#0A0B0E"
-            className="transition-all duration-300"
-          />
+          {/* Surrounding Client Pins with Distance */}
+          {/* Top-right pin */}
+          <circle cx={isHovered ? "174" : "168"} cy="42" r="3.5" fill="#0A0B0E" className="transition-all duration-300" />
+          <rect x={isHovered ? "180" : "174"} y="38" width="28" height="10" rx="1" fill="#F3F4F6" stroke="#E5E7EB" strokeWidth="0.5" />
+          <text x={isHovered ? "184" : "178"} y="45.5" fontSize="5.5" fill="#4B5563" fontFamily="monospace">
+            1.2 km
+          </text>
 
-          {/* Radar scan beam */}
+          {/* Bottom-left pin */}
+          <circle cx={isHovered ? "86" : "92"} cy="78" r="3.5" fill="#0A0B0E" className="transition-all duration-300" />
+          <rect x={isHovered ? "54" : "60"} y="74" width="28" height="10" rx="1" fill="#F3F4F6" stroke="#E5E7EB" strokeWidth="0.5" />
+          <text x={isHovered ? "58" : "64"} y="81.5" fontSize="5.5" fill="#4B5563" fontFamily="monospace">
+            2.8 km
+          </text>
+
+          {/* Bottom-right pin */}
+          <circle cx="166" cy="88" r="3.5" fill="#002FA7" />
+          <rect x="172" y="84" width="28" height="10" rx="1" fill="#002FA7" fillOpacity="0.1" stroke="#002FA7" strokeWidth="0.5" />
+          <text x="176" y="91.5" fontSize="5.5" fill="#002FA7" fontFamily="monospace" fontWeight="bold">
+            Client
+          </text>
+
+          {/* Radar Sweep Beam */}
           <line
-            x1="120"
-            y1="60"
-            x2={isHovered ? "160" : "150"}
-            y2={isHovered ? "25" : "35"}
+            x1="130"
+            y1="62"
+            x2={isHovered ? "170" : "158"}
+            y2={isHovered ? "28" : "36"}
             stroke="#002FA7"
-            strokeWidth="1.5"
+            strokeWidth="1.2"
+            strokeLinecap="round"
             className="transition-all duration-300"
           />
-          <text x="120" y="112" fontSize="8" fill="#4B5563" textAnchor="middle" fontFamily="monospace">
-            Zone d&apos;attraction : 5 km autour de la boutique
+
+          {/* Radius perimeter label */}
+          <text x="130" y="118" fontSize="7" fill="#6B7280" textAnchor="middle" fontFamily="monospace">
+            Rayon de ciblage : 5 km autour du point de vente
           </text>
         </svg>
       ),
@@ -213,8 +248,8 @@ export default function StateExpertise({ onNext, onPrev }: StateExpertiseProps) 
         </h2>
       </div>
 
-      {/* The 3 Architectural Pillar Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 my-auto">
+      {/* The 3 Architectural Pillar Cards with Generous Spacing */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 my-auto">
         {pillars.map((pillar) => {
           const isHovered = hoveredCard === pillar.id;
           return (
@@ -222,15 +257,15 @@ export default function StateExpertise({ onNext, onPrev }: StateExpertiseProps) 
               key={pillar.id}
               onMouseEnter={() => setHoveredCard(pillar.id)}
               onMouseLeave={() => setHoveredCard(null)}
-              className={`border rounded-[2px] bg-[#FFFFFF] p-6 flex flex-col justify-between transition-all duration-200 ${
+              className={`border rounded-[2px] bg-[#FFFFFF] p-6 sm:p-7 flex flex-col justify-between transition-all duration-200 ${
                 isHovered
-                  ? "border-[#002FA7] shadow-md -translate-y-1"
+                  ? "border-[#002FA7] shadow-lg -translate-y-1"
                   : "border-[#E5E7EB] hover:border-gray-400"
               }`}
             >
               <div>
                 {/* Pillar Header */}
-                <div className="flex items-center justify-between mb-3 pb-3 border-b border-[#E5E7EB]">
+                <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#E5E7EB]">
                   <span className="font-mono-code text-xs font-bold text-[#002FA7]">
                     {pillar.num}
                   </span>
@@ -239,24 +274,24 @@ export default function StateExpertise({ onNext, onPrev }: StateExpertiseProps) 
                   </span>
                 </div>
 
-                {/* Animated Interactive SVG Schema */}
-                <div className="bg-[#F8F9FA] border border-[#E5E7EB] rounded-[2px] p-2 mb-4 overflow-hidden">
+                {/* Animated Interactive SVG Schema with Dedicated Padding */}
+                <div className="bg-[#F8F9FA] border border-[#E5E7EB] rounded-[2px] p-3 mb-6 overflow-hidden flex items-center justify-center">
                   {pillar.svg(isHovered)}
                 </div>
 
                 {/* Title */}
-                <h3 className="text-base sm:text-lg font-bold text-[#0A0B0E] tracking-tight mb-2.5 leading-snug">
+                <h3 className="text-base sm:text-lg font-bold text-[#0A0B0E] tracking-tight mb-3 leading-snug">
                   {pillar.title}
                 </h3>
 
                 {/* Clear explanation without jargon */}
-                <p className="text-xs sm:text-sm text-[#4B5563] leading-relaxed mb-4">
+                <p className="text-xs sm:text-sm text-[#4B5563] leading-relaxed mb-6 font-normal">
                   {pillar.desc}
                 </p>
               </div>
 
               {/* Concrete business outcome */}
-              <div className="pt-3 border-t border-[#E5E7EB] text-xs font-mono-code text-[#0A0B0E] flex items-start gap-2 bg-[#F8F9FA]/60 p-2.5 rounded-[2px]">
+              <div className="pt-3 border-t border-[#E5E7EB] text-xs font-mono-code text-[#0A0B0E] flex items-start gap-2.5 bg-[#F8F9FA]/80 p-3 rounded-[2px]">
                 <span className="text-[#002FA7] font-bold">✓</span>
                 <span className="leading-snug">{pillar.benefit}</span>
               </div>
