@@ -1,26 +1,73 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --klein-blue: #002FA7;
+    --klein-blue-hover: #00227A;
+    --carbon-black: #0A0B0E;
+    --slate-text: #4B5563;
+    --structural-gray: #E5E7EB;
+    --surface-offwhite: #F8F9FA;
+  }
+
+  * {
+    border-color: #E5E7EB;
+  }
+
+  ::selection {
+    background-color: rgba(0, 47, 167, 0.15);
+    color: #002FA7;
+  }
+
+  /* Custom subtle scrollbar for the modal inspection preview */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #F1F3F5;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #CBD5E1;
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #94A3B8;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.font-jakarta {
+  font-family: var(--font-jakarta), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.font-mono-code {
+  font-family: var(--font-mono), monospace;
+}
+
+.font-playfair {
+  font-family: var(--font-playfair), Georgia, serif;
+}
+
+.font-space {
+  font-family: var(--font-space), sans-serif;
+}
+
+.font-cormorant {
+  font-family: var(--font-cormorant), Garamond, serif;
+}
+
+.font-syne {
+  font-family: var(--font-syne), sans-serif;
+}
+
+.font-instrument {
+  font-family: var(--font-instrument), -apple-system, sans-serif;
+}
+
+/* Subtle architectural grid pattern */
+.bg-grid-subtle {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(229, 231, 235, 0.4) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(229, 231, 235, 0.4) 1px, transparent 1px);
 }
